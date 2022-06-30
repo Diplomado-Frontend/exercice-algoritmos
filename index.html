@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="text/javascript">
+
+        const calculateTotal = () => {
+
+            //When the input values has change, remove the previous final message with the total calculate.
+            var divTotalCourse = document.getElementById('totalCourse');
+            divTotalCourse.innerHTML='';
+           
+            var formDomElem = document.getElementsByClassName('courseQuantityClass');
+            let totalCourse = 0;
+
+            for (let index = 0; index < formDomElem.length; index++) {
+                const element = formDomElem[index];
+
+                if(element.localName === 'input'){
+                    debugger;
+                    let inputId = element.attributes[1].nodeValue;
+                    let inputValue = document.getElementById(inputId).value;
+                     totalCourse += inputValue !== '' ? parseFloat(inputValue) : totalCourse;
+                }        
+            }
+
+            //Into div parent to display the calculated total value to pay.
+            var parent = document.getElementById("totalCourse");
+            var label = document.createElement("label");
+            label.innerHTML = `El valor total a pagar por las materias matriculadas es de: ${totalCourse} `;
+            parent.appendChild(label);
+
+        }
+
+        const createCourseQuantity = () => {
+            var inputValue = document.getElementById("courseQuantity").value;
+            // alert('inputValue: ' + inputValue);
+
+            if(inputValue <= 0) alert("Ingrese un valor correcto para la cantidad de materias.");
+            else {
+
+                debugger;
+                var formDomElem = document.getElementsByClassName('courseQuantityClass');
+
+                //check each input when his value was change, to update the input quantity displayed in the dom.
+                if(formDomElem.length > 0) 
+                {
+                    while (formDomElem[0] !== undefined) {
+                        formDomElem[0].remove()
+                    }
+                } 
+               
+                //Acording with the course quanty, create in the dom his asociate section: label + input.
+                for (let index = 0; index < inputValue; index++) {
+       
+                    const element = index+1;
+                    var input = document.createElement("input");
+                    var label = document.createElement("label");
+                    var br = document.createElement("br");
+                    input.setAttribute('type', 'text');
+                    input.setAttribute('id', `course${element}`);
+                    label.setAttribute("for",`course${element}`);
+                    label.innerHTML = `Ingrese el costo de la materia: ${element} `;
+                    input.setAttribute('class', 'courseQuantityClass');
+                    label.setAttribute('class', 'courseQuantityClass');
+                    br.setAttribute('class', 'courseQuantityClass');
+
+                    //Into div parent, add the label + input + br.
+                    var parent = document.getElementById("containerCourseQuantity");
+                    parent.appendChild(label);
+                    parent.appendChild(input);
+                    parent.appendChild(br);
+                }
+            }
+
+        }
+
+    </script>
+
+</head>
+<body>
+    <form action="" id="input-form">
+        <label for="">Ingrese valor</label>
+        <input type="text" id="courseQuantity" onfocusout="createCourseQuantity()">
+        <div id="containerCourseQuantity"></div>
+        <input type="button" onclick="calculateTotal()" value="Calcular">
+        <div id="totalCourse"></div>
+    </form>
+</body>
+</html>
