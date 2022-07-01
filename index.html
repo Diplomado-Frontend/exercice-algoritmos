@@ -11,82 +11,146 @@
         const calculateTotal = () => {
 
             //When the input values has change, remove the previous final message with the total calculate.
-            var divTotalCourse = document.getElementById('totalCourse');
+            const divTotalCourse = document.getElementById('totalCourse');
             divTotalCourse.innerHTML='';
            
-            var formDomElem = document.getElementsByClassName('courseQuantityClass');
+            const formDomElem = document.getElementsByClassName('courseQuantityClass');
             let totalCourse = 0;
 
+            //Get each input element to get is value and sum to return the total course calculate.
             for (let index = 0; index < formDomElem.length; index++) {
                 const element = formDomElem[index];
 
                 if(element.localName === 'input'){
-                    debugger;
                     let inputId = element.attributes[1].nodeValue;
                     let inputValue = document.getElementById(inputId).value;
-                     totalCourse += inputValue !== '' ? parseFloat(inputValue) : totalCourse;
+                    if (inputValue === '') 
+                    {
+                        alert('Debe ingresar un valor para cada materia');
+                        return;
+                    } else if (isNaN(inputValue)){
+                        alert(`${inputValue} no es un número`);
+                        return;
+                    } else {
+                        totalCourse +=  parseFloat(inputValue);
+                    }
+    
+                   
                 }        
             }
 
             //Into div parent to display the calculated total value to pay.
-            var parent = document.getElementById("totalCourse");
-            var label = document.createElement("label");
+            let parent = document.getElementById("totalCourse");
+            let label = document.createElement("label");
             label.innerHTML = `El valor total a pagar por las materias matriculadas es de: ${totalCourse} `;
             parent.appendChild(label);
 
         }
 
-        const createCourseQuantity = () => {
-            var inputValue = document.getElementById("courseQuantity").value;
-            // alert('inputValue: ' + inputValue);
+        window.addEventListener('keyup', function(event) {
+            event.preventDefault();
+            if (event.code === 'Enter') {        
+                 const inputValue = document.getElementById("courseQuantity").value;
+                 processCourseQuantity(inputValue);
 
-            if(inputValue <= 0) alert("Ingrese un valor correcto para la cantidad de materias.");
+            }
+        });
+
+        const createCourseQuantity = () => {
+            const inputValue = document.getElementById("courseQuantity").value;
+            processCourseQuantity(inputValue);
+        }
+
+        const processCourseQuantity = (inputValue) => {
+
+            if(inputValue <= 0 || inputValue > 1000) alert("Ingrese un valor correcto para la cantidad de materias.");
             else {
 
-                debugger;
-                var formDomElem = document.getElementsByClassName('courseQuantityClass');
-
                 //check each input when his value was change, to update the input quantity displayed in the dom.
-                if(formDomElem.length > 0) 
-                {
-                    while (formDomElem[0] !== undefined) {
-                        formDomElem[0].remove()
-                    }
-                } 
+                clearDomElement('courseQuantityClass');
+                clearDomElement('StainerClass');
+                clearDomElement('StudentCardClass');
+                clearDomElement('containerDiscount');              
                
-                //Acording with the course quanty, create in the dom his asociate section: label + input.
+                /*Acording with the course quantity added for the user, create in the dom his asociate section: label + input
+                for each course. */
                 for (let index = 0; index < inputValue; index++) {
        
-                    const element = index+1;
-                    var input = document.createElement("input");
-                    var label = document.createElement("label");
-                    var br = document.createElement("br");
-                    input.setAttribute('type', 'text');
-                    input.setAttribute('id', `course${element}`);
-                    label.setAttribute("for",`course${element}`);
-                    label.innerHTML = `Ingrese el costo de la materia: ${element} `;
-                    input.setAttribute('class', 'courseQuantityClass');
-                    label.setAttribute('class', 'courseQuantityClass');
-                    br.setAttribute('class', 'courseQuantityClass');
-
-                    //Into div parent, add the label + input + br.
-                    var parent = document.getElementById("containerCourseQuantity");
-                    parent.appendChild(label);
-                    parent.appendChild(input);
-                    parent.appendChild(br);
+                    //Start index in 1.
+                    const element = index + 1;
+                    createElement("Ingrese el costo de la materia: ", "courseQuantityClass", "containerCourseQuantity");
                 }
+
+                createElement("Costo de papelería: ", "StainerClass", "containerStainer", "20000");
+                createElement("Costo de Carné: ", "StudentCardClass", "containerStudentCard", "8000");                
+                createElement("Descuento: ", "DiscountClass", "containerDiscount", "20");                
             }
 
+        }
+
+        const createElement = (labelMessage, classNameAttr, nameParentCont, value) => {
+
+            //Create Stainer elements to set into dom.
+            let input = document.createElement("input");
+            let label = document.createElement("label");
+            let br = document.createElement("br");
+
+            setAttributes(input, label, br, 0, labelMessage, classNameAttr, value);
+            //Into div parent, add the label + input + br. 
+            setChildsToParent(nameParentCont, label, input, br);
+        }
+
+        const setAttributes = (input, label, br, currentIndex, labelMessage, classAttribute, value) => {
+
+            //Set attributes for each element.
+            input.setAttribute('type', 'text');
+            input.setAttribute('id', `course${currentIndex}`);
+            label.setAttribute("for",`course${currentIndex}`);
+            label.innerHTML = currentIndex > 0 ? `${labelMessage} ${currentIndex} ` : labelMessage;
+            input.setAttribute('class', classAttribute);
+            label.setAttribute('class', classAttribute);
+
+            if(value !== undefined) 
+                input.setAttribute('value', value);
+
+            br.setAttribute('class', classAttribute); 
+
+        }
+
+        const setChildsToParent = (parentId, label, input, br) => {
+            let parent = document.getElementById(parentId);
+            parent.appendChild(label);
+            parent.appendChild(input);
+            parent.appendChild(br);
+        }
+
+        const clearDomElement = (classNameElement) => {
+
+            const formDomElem = document.getElementsByClassName(classNameElement);
+
+            //check each input when his value was change, to update the input quantity displayed in the dom.
+            if(formDomElem.length > 0) 
+            {
+                while (formDomElem[0] !== undefined) {
+                    formDomElem[0].remove()
+                }
+            } 
         }
 
     </script>
 
 </head>
 <body>
-    <form action="" id="input-form">
-        <label for="">Ingrese valor</label>
+    <form action="" id="input-form" onsubmit="return false">
+        <label for="">Ingrese nombre estudiante: </label>
+        <input type="text" id="studentName">
+        </br>
+        <label for="">Ingrese cantidad de materias:</label>
         <input type="text" id="courseQuantity" onfocusout="createCourseQuantity()">
         <div id="containerCourseQuantity"></div>
+        <div id="containerStainer"></div>
+        <div id="containerStudentCard"></div>
+        <div id="containerDiscount"></div>
         <input type="button" onclick="calculateTotal()" value="Calcular">
         <div id="totalCourse"></div>
     </form>
