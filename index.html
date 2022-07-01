@@ -20,10 +20,12 @@
             let discountValue = getValuesFromInputs('DiscountClass', 'Debe ingresar un valor de descuento', true);
             let userNameValue = getValuesFromInputs('studentNameClass', 'Debe ingresar su nombre', false);
 
+            //Calculate total result to display 
             discountValue = (totalCourseValue * discountValue) / 100;
             totalCourseValue -= discountValue;
             totalCourseValue += stainerValue + studentCardValue;
 
+            //Validations.
             if (totalCourseValue == 0 || stainerValue == 0 || studentCardValue == 0)
                 alert("Te falta ingresar un valor. Intenta nuevamente");
              else if (totalCourseValue && stainerValue && studentCardValue && userNameValue)
@@ -36,6 +38,7 @@
                 alert("Por favor valida la información ingresada e intenta nuevamente");
             }        
         }
+
 
         window.addEventListener('keyup', function(event) {
             event.preventDefault();
