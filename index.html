@@ -32,7 +32,7 @@
             {   
                 //Into div parent to display the calculated total value to pay.
                 let label = document.createElement("label");
-                label.innerHTML = `Señor ${userNameValue} El valor total a pagar por las materias matriculadas es de: ${totalCourseValue} `;
+                label.innerHTML = `Señor ${userNameValue} el valor total a pagar por las materias matriculadas es de: ${totalCourseValue} `;
                 divTotalCourse.appendChild(label);
             } else {
                 alert("Por favor valida la información ingresada e intenta nuevamente");
@@ -99,31 +99,61 @@
                
                 /*Acording with the course quantity added for the user, create in the dom his asociate section: label + input
                 for each course. */
-                for (let index = 1; index <= inputValue; index++) {      
-                    let element = index;
-                    createElement(`Ingrese el costo de la materia: ${element} `, "courseQuantityClass", "containerCourseQuantity", undefined, `course${element}`);
+                for (let index = 1; index <= inputValue; index++) {  
+
+                    let element = index;              
+                    createElement({ labelMessage: `Ingrese el costo de la materia: ${element} `, 
+                                classNameAttr: "courseQuantityClass", 
+                                nameParentCont: "containerCourseQuantity", 
+                                value: undefined, 
+                                idElement: `course${element}`
+                              });                  
                 }
 
-                createElement("Costo de papelería: ", "StainerClass", "containerStainer", "20000", "stainerId");                     
-                createElement("Costo de Carné: ", "StudentCardClass", "containerStudentCard", "8000", "studentCardId");                
-                createElement("Descuento: ", "DiscountClass", "containerDiscount", "20", "discountId");                
+                createElement({ labelMessage:"Costo de papelería: ", 
+                                classNameAttr: "StainerClass", 
+                                nameParentCont: "containerStainer", 
+                                value: "20000", 
+                                idElement: "stainerId"
+                              });
+
+                createElement({ labelMessage:"Costo de Carné: ", 
+                                classNameAttr: "StudentCardClass", 
+                                nameParentCont: "containerStudentCard", 
+                                value: "8000", 
+                                idElement: "studentCardId"
+                              });  
+                
+                createElement({ labelMessage:"Descuento: ", 
+                                classNameAttr: "DiscountClass", 
+                                nameParentCont: "containerDiscount", 
+                                value: "20", 
+                                idElement: "discountId"
+                              });                                             
             }
 
         }
 
-        const createElement = (labelMessage, classNameAttr, nameParentCont, value, idElement) => {
+        const createElement = ({labelMessage, classNameAttr, nameParentCont, value, idElement}) => {
 
             //Create Stainer elements to set into dom.
             let input = document.createElement("input");
             let label = document.createElement("label");
             let br = document.createElement("br");
 
-            setAttributes(input, label, br, idElement, labelMessage, classNameAttr, value);
+            setAttributes({input: input, 
+                           label: label, 
+                           br: br, 
+                           idElement: idElement, 
+                           labelMessage: labelMessage, 
+                           classAttribute: classNameAttr, 
+                           value: value});
+                           
             //Into div parent, add the label + input + br. 
             setChildsToParent(nameParentCont, label, input, br);
         }
 
-        const setAttributes = (input, label, br, idElement, labelMessage, classAttribute, value) => {
+        const setAttributes = ({input, label, br, idElement, labelMessage, classAttribute, value}) => {
 
             //Set attributes for each element.
             input.setAttribute('type', 'text');
