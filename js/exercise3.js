@@ -10,8 +10,13 @@ const functionParams =(stringParam) => {
     arrayString = stringParam.split(' ');
     // console.log('Reverse word: ' + arrayString.reverse());
     console.log('Reverse word: ' + arrayString.reverse());
+    arrayString = stringParam.split(' ');
+    console.log('From A to Z: ' + arrayString.arrayString.sort(((a, b) =>
+                        a.toLowerCase() > b.toLowerCase() ? 1 :
+                        a.toLowerCase() < b.toLowerCase() ? -1:
+                        0
+    )));
 
-    // console.log('From A to Z: ' + arrayString.sort());
     // console.log('From Z to A: ' + descOrder(arrayString));
 
 }
