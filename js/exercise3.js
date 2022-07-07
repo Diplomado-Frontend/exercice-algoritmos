@@ -11,7 +11,7 @@ const functionParams =(stringParam) => {
     // console.log('Reverse word: ' + arrayString.reverse());
     console.log('Reverse word: ' + arrayString.reverse());
     arrayString = stringParam.split(' ');
-    console.log('From A to Z: ' + arrayString.arrayString.sort(((a, b) =>
+    console.log('From A to Z: ' + arrayString.sort(((a, b) =>
                         a.toLowerCase() > b.toLowerCase() ? 1 :
                         a.toLowerCase() < b.toLowerCase() ? -1:
                         0
