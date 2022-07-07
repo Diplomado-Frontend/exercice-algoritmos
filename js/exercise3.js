@@ -17,7 +17,28 @@ const functionParams =(stringParam) => {
                         0
     )));
 
-    // console.log('From Z to A: ' + descOrder(arrayString));
+    arrayString = stringParam.split(' ');
+
+    console.log('From Z to A: ' + arrayString.sort().reverse());
+
+    //Ejemplo profesor:
+
+    let string = stringParam.split(' ');
+        let lowerCaseText = string.toLowerCase();
+    let arrayText = lowerCaseText.split(' ');
+    let wordCount = arrayText.length;
+    let Firts = arrayText[0];
+    let last = arrayText[arrayText.length -1];
+    let inverseText = arrayText.reverse().join(' ');
+    let ascOrder = arrayText.sort().join(' ');
+    let descOrder = arrayText.sort().reverse().join(' ');
+
+    console.log(wordCount);
+    console.log(Firts);
+    console.log(last);
+    console.log(inverseText);
+    console.log(ascOrder);
+    console.log(descOrder);
 
 }
 
