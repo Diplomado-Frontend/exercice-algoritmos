@@ -52,7 +52,13 @@
     let { aula2 } = course1;
     let { student2 } = aula2;
 
+    let { name, lastName, age, correr } = institutions.sites.site1.course1.aula2.student3;
+
     console.log(student2);
+    console.log(name);
+    console.log(lastName);
+    console.log(age);
+    console.log(correr);
 
 })();
 
